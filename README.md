@@ -58,6 +58,8 @@ pip show langchain-community
 
 pip install -U langchain-ollama
 
+pip install -U langchain-qdrant
 
+pip install -U langchain-huggingface
 
 
