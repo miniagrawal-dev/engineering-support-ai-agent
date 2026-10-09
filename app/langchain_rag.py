@@ -1,5 +1,5 @@
 from qdrant_client import QdrantClient
-from qdrant_client.models import Distance, VectorParams
+from qdrant_client.models import Distance, VectorParams, Filter, FieldCondition, MatchValue
 
 from langchain_qdrant import QdrantVectorStore
 from langchain_core.documents import Document
@@ -114,12 +114,25 @@ vector_store.add_documents(documents)
 # 8. Create retriever
 # --------------------------------------------------
 
+# retriever = vector_store.as_retriever(
+#     search_kwargs={
+#         "k": 4
+#     }
+# )
+
 retriever = vector_store.as_retriever(
     search_kwargs={
-        "k": 4
+        "k": 4,
+        "filter": Filter(
+            must=[
+                FieldCondition(
+                    key="metadata.service",
+                    match=MatchValue(value="routing-service")
+                )
+            ]
+        )
     }
 )
-
 
 # --------------------------------------------------
 # 9. User question
